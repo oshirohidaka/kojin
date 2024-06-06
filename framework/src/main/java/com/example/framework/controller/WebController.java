@@ -2,6 +2,7 @@ package com.example.framework.controller;
 
 import com.example.framework.entity.CategoriesRecord;
 import com.example.framework.entity.ProductRecord;
+import com.example.framework.form.DeleteForm;
 import com.example.framework.form.InsertForm;
 import com.example.framework.form.LoginForm;
 import com.example.framework.service.PgProductService;
@@ -27,6 +28,7 @@ public class WebController {
     public String index(@ModelAttribute("loginForm") LoginForm loginForm) {
         return "index";
     }
+    //ログイン画面の表示　　("loginForm") LoginForm loginForm)にはゆ入力された値が入る
 
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, Model model) {
@@ -92,7 +94,7 @@ public class WebController {
             model.addAttribute("error", "商品コードが重複しています");
             return "insert";
         }
-        pgProductService.insert(insertForm.getProduct_id(), insertForm.getName(), insertForm.getPrice(), insertForm.getCategory_id());
+        pgProductService.insert(insertForm.getId(),insertForm.getProduct_id(), insertForm.getName(), insertForm.getPrice(), insertForm.getCategory_id());
         return "redirect:/success";
     }
 
@@ -100,6 +102,19 @@ public class WebController {
     public String success(@ModelAttribute("insertForms") InsertForm insertForm) {
         return "success";
     }
+
+
+    @GetMapping("/detail/{id}")//←「URLとメソッドを紐づける」役割
+    public String detail(@PathVariable("id") int id, @ModelAttribute("DeleteForm") DeleteForm deleteForm, Model model) {
+        model.addAttribute("product", pgProductService.findByid(id));
+        return "detail";
+    }
+    @PostMapping("/detail/{id}")
+    public String delete(@PathVariable("id") int id) {
+        pgProductService.delete(id);
+        return "success";
+    }
+
 }
 
 

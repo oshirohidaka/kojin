@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class InsertForm {
+
+    private int id;
     @NotEmpty(message = "商品コードは必須です")
     private String product_id;
 

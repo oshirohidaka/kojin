@@ -61,7 +61,7 @@
             <td th:text="${ProductRecord.name}"></td>
             <td th:text="${ProductRecord.price}"></td>
             <td th:text="${ProductRecord.categories_name}"></td>
-            <td><a class="detail_btn" href="./detail.html">詳細</a></td>
+            <td><a class="detail_btn" th:href="@{/detail/{id} (id = ${ProductRecord.id})}">詳細</a></td>
         </tr>
         </thead>
     </table>

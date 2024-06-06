@@ -23,8 +23,8 @@ public class PgProductService implements ProductService {
         return pgProductDao.findByKeyword(name);
     }
     @Override
-    public int insert(String product_id,String name,int price,int category_id) {
-        return pgProductDao.insert(product_id,name,price,category_id);
+    public int insert(int id,String product_id,String name,int price,int category_id) {
+        return pgProductDao.insert(id,product_id,name,price,category_id);
     }
     @Override
     public List<CategoriesRecord> categories(){
@@ -34,5 +34,14 @@ public class PgProductService implements ProductService {
     public ProductRecord findByPid(String product_id){
         return pgProductDao.findByPid(product_id);
     }
+    @Override
+    public ProductRecord findByid(int id){
+        return pgProductDao.findByid(id);
+    }
+    public int delete(int product_id) {
+        return pgProductDao.delete(product_id);
+    }
+
+
 
 }

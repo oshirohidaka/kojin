@@ -13,9 +13,13 @@ public interface ProductService {
 
     List<ProductRecord> findByKeyword(String name);
 
-    int insert(String product_id, String name, int price, int category_id);
+    int insert(int id,String product_id, String name, int price, int category_id);
 
     List<CategoriesRecord> categories();
 
     ProductRecord findByPid(String product_id);
+
+    ProductRecord findByid(int id);
+
+    int delete(int product_id);
 }
