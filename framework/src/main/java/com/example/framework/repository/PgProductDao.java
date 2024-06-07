@@ -28,7 +28,6 @@ public class PgProductDao implements ProductDao {
         var param = new MapSqlParameterSource();
         param.addValue("name", name);
         return jdbcTemplate.query("SELECT products.id,product_id,products.name,price,categories.name AS categories_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.name LIKE '%"+name+"%' ORDER BY product_id;", param, new DataClassRowMapper<>(ProductRecord.class));
-
     }
 
     @Override

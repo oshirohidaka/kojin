@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>更新</title>
-    <link href="css/commons.css" rel="stylesheet">
+    <link th:href="@{/css/commons.css}" rel="stylesheet">
 </head>
 <body>
 <div class="header">
@@ -23,30 +23,32 @@
     <div class="form-body">
         <p class="error">エラーメッセージ</p>
 
-        <form action="menu.html" method="get">
+        <form action="menu" method="get" th:object="${UpdateForm}">
             <fieldset class="label-130">
                 <div>
                     <label>商品ID</label>
-                    <input type="text" name="productId" value="10001" class="base-text">
+                    <input type="text" name="productId" class="base-text" th:value="${UpdateForm.product_id}">
                     <span class="error">エラーメッセージ</span>
                 </div>
                 <div>
                     <label>商品名</label>
-                    <input type="text" name="name" value="マッキー(黒)" class="base-text">
+                    <input type="text" name="name" class="base-text" th:value="${UpdateForm.name}">
                     <span class="error">エラーメッセージ</span>
                 </div>
                 <div>
                     <label>単価</label>
-                    <input type="text" name="price" value="165" class="base-text">
+                    <input type="text" name="price" class="base-text" th:value="${UpdateForm.price}">
                     <span class="error">エラーメッセージ</span>
                 </div>
                 <div>
-                    <label>カテゴリ</label> <select name="categoryId" class="base-text">
-                    <option value="1" selected>ペン</option>
-                    <option value="2">ノート</option>
-                    <option value="3">消しゴム</option>
-                    <option value="4">のり</option>
-                </select>
+                    <label>カテゴリ</label>
+                    <select name="categoryId" class="base-text" >
+                        <option th:each="CategoriesRecord : ${categories}"
+                                th:value="${CategoriesRecord.id}"
+                                th:text="${CategoriesRecord.name}"
+                                th:selected="${CategoriesRecord.id==id}">
+                        </option>
+                    </select>
                 </div>
                 <div>
                     <label>商品説明</label>
@@ -68,7 +70,7 @@
             <div id="modal">
                 <p class="modal-message">更新しますか？</p>
                 <div class="btns">
-                    <button type="button" id="update-btn" class="basic-btn">更新</button>
+                    <button type="submit" id="update-btn" class="basic-btn">更新</button>
                     <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
                 </div>
             </div>
@@ -76,7 +78,7 @@
     </div>
 </div>
 <div id="fadeLayer"></div>
-<script src="./js/commons.js"></script>
+<script src="/js/commons.js"></script>
 <script>
     'use strict'
     document.getElementById('update-btn').addEventListener('click', () => {

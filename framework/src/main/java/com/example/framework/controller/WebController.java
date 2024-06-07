@@ -5,6 +5,7 @@ import com.example.framework.entity.ProductRecord;
 import com.example.framework.form.DeleteForm;
 import com.example.framework.form.InsertForm;
 import com.example.framework.form.LoginForm;
+import com.example.framework.form.UpdateForm;
 import com.example.framework.service.PgProductService;
 import com.example.framework.service.PgUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,6 @@ public class WebController {
         return "index";
     }
 
-    //    @GetMapping("/menu")
-//    public String menu(){
-//        return "menu";
-//    }
     @GetMapping({"/menu","/menu/{order}&{keyword}"})//←「URLとメソッドを紐づける」役割
     public String menu(@RequestParam(name = "keyword", defaultValue = "") String keyword, Model model) {
         List<ProductRecord>list;
@@ -65,8 +62,6 @@ public class WebController {
         var count = list.size();
         model.addAttribute("count", count);
         return "menu";
-
-
     }
 
     @GetMapping("/insert")
@@ -113,6 +108,15 @@ public class WebController {
     public String delete(@PathVariable("id") int id) {
         pgProductService.delete(id);
         return "success";
+    }
+
+    @GetMapping("/updateinput/{id}")//←「URLとメソッドを紐づける」役割
+    public String edit(@PathVariable("id") int id, @ModelAttribute("UpdateForm") UpdateForm updateForm, Model model) {
+        List<CategoriesRecord>list=pgProductService.categories();
+        model.addAttribute("categories", list);
+//        ↑この処理は編集画面のカテゴリーを表示させる処理
+        model.addAttribute("UpdateForm", pgProductService.findByid(id));
+        return "updateinput";
     }
 
 }
